@@ -13,6 +13,8 @@
 		A4BBC4D91BCE5B62004B8AF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4BBC4D71BCE5B62004B8AF5 /* Main.storyboard */; };
 		A4BBC4DB1BCE5B62004B8AF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4BBC4DA1BCE5B62004B8AF5 /* Assets.xcassets */; };
 		A4BBC4DE1BCE5B62004B8AF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A4BBC4DC1BCE5B62004B8AF5 /* LaunchScreen.storyboard */; };
+		A4BBC4EA1BCE5B77004B8AF5 /* ZBCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BBC4E71BCE5B77004B8AF5 /* ZBCycleScrollView.m */; settings = {ASSET_TAGS = (); }; };
+		A4BBC4EB1BCE5B77004B8AF5 /* ZBDotPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A4BBC4E91BCE5B77004B8AF5 /* ZBDotPageControl.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,10 @@
 		A4BBC4DA1BCE5B62004B8AF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A4BBC4DD1BCE5B62004B8AF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A4BBC4DF1BCE5B62004B8AF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A4BBC4E61BCE5B77004B8AF5 /* ZBCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBCycleScrollView.h; sourceTree = "<group>"; };
+		A4BBC4E71BCE5B77004B8AF5 /* ZBCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBCycleScrollView.m; sourceTree = "<group>"; };
+		A4BBC4E81BCE5B77004B8AF5 /* ZBDotPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZBDotPageControl.h; sourceTree = "<group>"; };
+		A4BBC4E91BCE5B77004B8AF5 /* ZBDotPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZBDotPageControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 		A4BBC4CD1BCE5B62004B8AF5 /* ZBCycleScrollView-master */ = {
 			isa = PBXGroup;
 			children = (
+				A4BBC4E51BCE5B77004B8AF5 /* ZBCycleScrollView */,
 				A4BBC4D11BCE5B62004B8AF5 /* AppDelegate.h */,
 				A4BBC4D21BCE5B62004B8AF5 /* AppDelegate.m */,
 				A4BBC4D41BCE5B62004B8AF5 /* ViewController.h */,
@@ -77,6 +84,17 @@
 				A4BBC4CF1BCE5B62004B8AF5 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A4BBC4E51BCE5B77004B8AF5 /* ZBCycleScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				A4BBC4E61BCE5B77004B8AF5 /* ZBCycleScrollView.h */,
+				A4BBC4E71BCE5B77004B8AF5 /* ZBCycleScrollView.m */,
+				A4BBC4E81BCE5B77004B8AF5 /* ZBDotPageControl.h */,
+				A4BBC4E91BCE5B77004B8AF5 /* ZBDotPageControl.m */,
+			);
+			path = ZBCycleScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4BBC4EA1BCE5B77004B8AF5 /* ZBCycleScrollView.m in Sources */,
 				A4BBC4D61BCE5B62004B8AF5 /* ViewController.m in Sources */,
 				A4BBC4D31BCE5B62004B8AF5 /* AppDelegate.m in Sources */,
 				A4BBC4D01BCE5B62004B8AF5 /* main.m in Sources */,
+				A4BBC4EB1BCE5B77004B8AF5 /* ZBDotPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
