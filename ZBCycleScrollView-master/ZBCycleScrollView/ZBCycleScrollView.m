@@ -133,11 +133,8 @@
     
     if (_dataSource && [_dataSource respondsToSelector:@selector(numberOfPagesIncyCleScrollView)]) {
         NSInteger newTotalCount = [_dataSource numberOfPagesIncyCleScrollView];
-        
         self.indicator.numberOfPages = newTotalCount;
-        
         if(_totalPageCount < 1) _totalPageCount = newTotalCount;
-        
         if ([_dataSource respondsToSelector:@selector(cycleScrollView:viewForPageAtIndex:)])
         {
             NSInteger pageCount = round(_scrollView.contentOffset.x/_scrollView.frame.size.width)-1;
