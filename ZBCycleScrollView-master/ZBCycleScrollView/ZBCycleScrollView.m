@@ -89,7 +89,7 @@
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_scrollView][_frontBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_scrollView, _frontBar)]];
     }
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_frontBar attribute:NSLayoutAttributeHeight multiplier:FRONT_BAR_HEIGHT_RATIO constant:0.0f]];
-
+    
     [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[containerZero][containerOne][containerTwo][containerThree][containerFour]|" options:0 metrics:nil views:@{@"containerZero":_containerArray[0],@"containerOne":_containerArray[1],@"containerTwo":_containerArray[2],@"containerThree":_containerArray[3],@"containerFour":_containerArray[4]}]];
     
     for (UIView *container in _containerArray) {
@@ -133,6 +133,7 @@
     
     if (_dataSource && [_dataSource respondsToSelector:@selector(numberOfPagesIncyCleScrollView)]) {
         NSInteger newTotalCount = [_dataSource numberOfPagesIncyCleScrollView];
+        
         self.indicator.numberOfPages = newTotalCount;
         
         if(_totalPageCount < 1) _totalPageCount = newTotalCount;
@@ -181,7 +182,7 @@
     }
     return index;
 }
-         
+
 #pragma mark - put the pageView into containerView
 - (void)configView:(UIView*)pageView inContainerView:(UIView*)container{
     if (container.subviews.count>0) { [container.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)]; }
@@ -303,12 +304,6 @@
 }
 
 -(NSInteger)currentIndex{
-    
-//    NSInteger idx = [self getpageWithIndex:_containerOneIndex + round(_scrollView.contentOffset.x/_scrollView.frame.size.width) - 1];
-//    NSLog(@"%@",@(idx));
-//    if (1 == idx) {
-//        NSLog(@"page = %f",round(_scrollView.contentOffset.x/_scrollView.frame.size.width));
-//    }
     
     return [self getpageWithIndex:_containerOneIndex + round(_scrollView.contentOffset.x/_scrollView.frame.size.width) - 1 withTotalCount:_totalPageCount];
 }

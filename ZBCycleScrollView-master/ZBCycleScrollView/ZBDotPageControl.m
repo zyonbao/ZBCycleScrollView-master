@@ -9,7 +9,7 @@
 #import "ZBDotPageControl.h"
 
 
-#define dotSize 11
+#define dotSize 10
 
 @implementation ZBDotPageControl
 
