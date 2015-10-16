@@ -49,6 +49,10 @@
     return label;
 }
 
+- (NSString *)cycleScrollView:(ZBCycleScrollView *)scrollView titleForPageAtIndex:(NSInteger)index{
+    return [NSString stringWithFormat:@"This is the %lith page",(long)index];
+}
+
 -(NSInteger)numberOfPagesIncyCleScrollView {
     return count;
 }

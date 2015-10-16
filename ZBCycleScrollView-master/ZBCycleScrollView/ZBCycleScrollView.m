@@ -10,7 +10,7 @@
 #import "ZBDotPageControl.h"
 
 #define DEFAULT_TIME_INTERVAL 3.0f
-#define FRONT_BAR_HEIGHT_RATIO 6.0f //greater smaller
+#define FRONT_BAR_HEIGHT_RATIO 6.0f //largerer to set fontbar smaller
 
 @interface ZBCycleScrollView ()<UIScrollViewDelegate>
 
@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSTimer *animationTimer;
 
 @property (nonatomic , strong) ZBDotPageControl *indicator;
+@property (nonatomic , strong) UILabel *desc;
 
 @end
 
@@ -71,6 +72,9 @@
     
     _frontBar = [UIView new];
     [self addSubview:_frontBar];
+    self.desc = [[UILabel alloc] init];
+    self.desc.textAlignment = NSTextAlignmentNatural;
+    [_frontBar addSubview:self.desc];
     self.indicator = [[ZBDotPageControl alloc] init];
     [_frontBar addSubview:self.indicator];
     
@@ -102,8 +106,13 @@
      *  FrontBar Constraints
      */
     _indicator.translatesAutoresizingMaskIntoConstraints = NO;
-    [_frontBar addConstraint:[NSLayoutConstraint constraintWithItem:_frontBar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_indicator attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:CGFLOAT_MIN]];
-    [_frontBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_indicator]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_indicator)]];
+    _desc.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [_frontBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_indicator]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_indicator)]];
+    [_frontBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_desc]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_desc)]];
+    [_frontBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-8-[_desc][_indicator(66)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_indicator,_desc)]];
+    _indicator.layer.masksToBounds = YES;
+    
     [super updateConstraints];
 }
 
@@ -111,8 +120,12 @@
     
     [super layoutSubviews];
     _frontBar.backgroundColor = _frontBarColor ? _frontBarColor:[UIColor colorWithWhite:0.0/255.0 alpha:0.7];
+    self.desc.textColor = _titleTextColor ? _titleTextColor : [UIColor colorWithWhite:255.0/255.0 alpha:1.0];
+    
     [_scrollView setContentOffset:CGPointMake(_scrollView.frame.size.width, 0)];
     self.indicator.currentPage = 0;
+    _desc.text = [_dataSource cycleScrollView:self titleForPageAtIndex:0];
+    
     [self reloadData];
     
     if (_autoScrollTimeInterval>0){
@@ -149,6 +162,7 @@
         }else{
             _totalPageCount = 0;
             self.indicator.numberOfPages = 0;
+            _desc.text = @"";
             [self loadContainerView];
         }
     }
@@ -164,6 +178,9 @@
         [self configView:[_dataSource cycleScrollView:self viewForPageAtIndex:[self getpageWithIndex:_containerOneIndex+i-1 withTotalCount:_totalPageCount]] inContainerView:_containerArray[i]];
     }
     _indicator.currentPage = self.currentIndex;
+    if (_delegate && [_delegate respondsToSelector:@selector(cycleScrollView:titleForPageAtIndex:)]) {
+        _desc.text = [_dataSource cycleScrollView:self titleForPageAtIndex:self.currentIndex];
+    }
 }
 
 #pragma mark - Calculate The start Index
@@ -234,7 +251,13 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    _indicator.currentPage = self.currentIndex;
+    NSInteger currentPageIndex = self.currentIndex;
+    if (_indicator.currentPage != currentPageIndex) {
+        _indicator.currentPage = self.currentIndex;
+        if (_delegate && [_delegate respondsToSelector:@selector(cycleScrollView:titleForPageAtIndex:)]) {
+            _desc.text = [_dataSource cycleScrollView:self titleForPageAtIndex:self.currentIndex];
+        }
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
@@ -245,8 +268,8 @@
 
 #pragma mark - tap event handler
 - (void)contentTapped:(UITapGestureRecognizer *)sender{
-    CGFloat pointX = [sender locationInView:sender.view].x;
-    NSInteger tapIndex = _containerOneIndex + (long)[@(pointX/_scrollView.frame.size.width) integerValue] - 1;
+    NSInteger pageCount =[sender locationInView:sender.view].x/_scrollView.frame.size.width - 1;
+    NSInteger tapIndex = [self getpageWithIndex:_containerOneIndex + pageCount withTotalCount:_totalPageCount];
     if ([_delegate respondsToSelector:@selector(cycleScrollView:didTapAtIndex:)]) {
         [_delegate cycleScrollView:self didTapAtIndex:tapIndex];
     }
@@ -300,8 +323,15 @@
     }
 }
 
+- (void)setTitleTextColor:(UIColor *)titleTextColor{
+    if (_titleTextColor != titleTextColor) {
+        _titleTextColor = titleTextColor;
+        _desc.textColor = _titleTextColor;
+    }
+}
+
+
 -(NSInteger)currentIndex{
-    
     return [self getpageWithIndex:_containerOneIndex + round(_scrollView.contentOffset.x/_scrollView.frame.size.width) - 1 withTotalCount:_totalPageCount];
 }
 

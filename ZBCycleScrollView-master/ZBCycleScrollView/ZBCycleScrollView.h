@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, CycleScrollStyle){
 @property (nonatomic) NSTimeInterval autoScrollTimeInterval;
 @property (nonatomic) CycleScrollStyle style;
 @property (nonatomic) UIColor *frontBarColor;
+@property (nonatomic) UIColor *titleTextColor;
 @property (nonatomic) UIColor *indicatorTintColor;
 
 @property (nonatomic, weak) id<ZBCycleScrollViewDataSource> dataSource;
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSInteger, CycleScrollStyle){
 
 - (NSInteger)numberOfPagesIncyCleScrollView;
 - (UIView *)cycleScrollView:(ZBCycleScrollView*)scrollView viewForPageAtIndex:(NSInteger)index;
+- (NSString *)cycleScrollView:(ZBCycleScrollView*)scrollView titleForPageAtIndex:(NSInteger)index;
 
 @end
 
