@@ -23,7 +23,8 @@ typedef NS_ENUM(NSInteger, CycleScrollStyle){
 @property (nonatomic) CycleScrollStyle style;
 @property (nonatomic) UIColor *frontBarColor;
 @property (nonatomic) UIColor *titleTextColor;
-@property (nonatomic) UIColor *indicatorTintColor;
+@property (nonatomic) UIColor *indicatorHighlightColor;
+@property (nonatomic) UIColor *indicatorNormalDotColor;
 
 @property (nonatomic, weak) id<ZBCycleScrollViewDataSource> dataSource;
 @property (nonatomic, weak) id<ZBCycleScrollViewDelegate> delegate;

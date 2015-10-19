@@ -10,6 +10,4 @@
 
 @interface ZBDotPageControl : UIPageControl
 
-@property (nonatomic) UIColor *dotColor;
-
 @end

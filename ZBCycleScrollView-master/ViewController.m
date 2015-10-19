@@ -20,18 +20,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    count = 6;
+    count = 1;
     // Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor lightGrayColor]];
     cycleView = [[ZBCycleScrollView alloc] initWithFrame:CGRectMake(0, 60, 320, 180)];
     cycleView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:cycleView];
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     cycleView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cycleView]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cycleView)]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-60-[cycleView(120)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cycleView)]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-84-[cycleView(120)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cycleView)]];
     cycleView.dataSource = self;
     cycleView.delegate = self;
+    cycleView.indicatorHighlightColor = [UIColor cyanColor];
+    cycleView.indicatorNormalDotColor = [UIColor whiteColor];
     
     UIButton *chageCount = [UIButton buttonWithType:UIButtonTypeCustom];
     [chageCount setTitle:@"点击刷新" forState:UIControlStateNormal];
@@ -60,9 +63,9 @@
     NSLog(@"%li",(long)index);
 }
 - (void)btnClicked:(UIButton *)sender{
-    count--;
-    if (count < 4) {
-        count = 6;
+    count++;
+    if (count > 4) {
+        count = 1;
     }
     [cycleView reloadData];
 }

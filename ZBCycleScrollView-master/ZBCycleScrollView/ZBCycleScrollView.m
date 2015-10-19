@@ -189,9 +189,9 @@
         return 0;
     }
     if(index < 0){
-        return totalCount+index%totalCount >= 0 ? totalCount+index%totalCount : [self getpageWithIndex:totalCount+index%totalCount withTotalCount:totalCount];
+        return index%totalCount == 0 ? 0 :(totalCount+index%totalCount>0 ? totalCount+index%totalCount:[self getpageWithIndex:totalCount+index%totalCount withTotalCount:totalCount]);
     }
-    if (index >= _totalPageCount) {
+    if (index >= totalCount) {
         return index%totalCount < totalCount ? index%totalCount : [self getpageWithIndex:index%totalCount withTotalCount:totalCount];
     }
     return index;
@@ -263,7 +263,6 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self resumeTimerAfterTimeInterval:_timeInterVal];
-    
 }
 
 #pragma mark - tap event handler
@@ -278,7 +277,7 @@
 #pragma mark - Event for the timer
 - (void)animationTimerDidFired:(NSTimer *)timer
 {
-    CGPoint newOffset = CGPointMake(_scrollView.contentOffset.x + CGRectGetWidth(_scrollView.frame), 0);
+    CGPoint newOffset = CGPointMake((@(_scrollView.contentOffset.x/CGRectGetWidth(_scrollView.frame)).integerValue+1)*CGRectGetWidth(_scrollView.frame), 0);
     [_scrollView setContentOffset:newOffset animated:YES];
 }
 
@@ -316,10 +315,17 @@
     }
 }
 
-- (void)setIndicatorTintColor:(UIColor *)indicatorTintColor{
-    if (_indicatorTintColor != indicatorTintColor) {
-        _indicatorTintColor = indicatorTintColor;
-        _indicator.dotColor = _indicatorTintColor;
+- (void)setIndicatorHighlightColor:(UIColor *)indicatorHighlightColor{
+    if (_indicatorHighlightColor != indicatorHighlightColor) {
+        _indicatorHighlightColor = indicatorHighlightColor;
+        _indicator.currentPageIndicatorTintColor = _indicatorHighlightColor;
+    }
+}
+
+- (void)setIndicatorNormalDotColor:(UIColor *)indicatorNormalDotColor{
+    if (_indicatorNormalDotColor != indicatorNormalDotColor) {
+        _indicatorNormalDotColor = indicatorNormalDotColor;
+        _indicator.pageIndicatorTintColor = _indicatorNormalDotColor;
     }
 }
 
@@ -332,7 +338,7 @@
 
 
 -(NSInteger)currentIndex{
-    return [self getpageWithIndex:_containerOneIndex + round(_scrollView.contentOffset.x/_scrollView.frame.size.width) - 1 withTotalCount:_totalPageCount];
+    return [self getpageWithIndex:_containerOneIndex + round(_scrollView.contentOffset.x/CGRectGetWidth(_scrollView.frame)) - 1 withTotalCount:_totalPageCount];
 }
 
 
